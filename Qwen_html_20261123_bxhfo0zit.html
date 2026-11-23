@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>NEON HARBOR: CRIME CITY</title>
+<meta name="description" content="Action-adventure criminal em mundo aberto tropical, jogável no navegador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="game"></div>
+<div id="ui"></div>
+<div id="boot">
+  <div class="boot-logo">NEON<span>HARBOR</span></div>
+  <div class="boot-sub">CRIME CITY</div>
+  <div class="boot-bar"><div id="boot-fill"></div></div>
+  <div id="boot-msg">Conectando ao porto…</div>
+</div>
+<div id="boot-error" hidden>
+  <div class="be-card">
+    <h2>Sinal perdido na maré</h2>
+    <p>Não foi possível carregar o motor 3D (Three.js via CDN). Verifique sua conexão — ou sirva o jogo por HTTP (`npx serve`) — e recarregue.</p>
+    <button onclick="location.reload()">Tentar de novo</button>
+  </div>
+</div>
+<script>
+  window.__NH_BOOTED = false;
+  setTimeout(() => { if (!window.__NH_BOOTED) { document.getElementById('boot').hidden = true; document.getElementById('boot-error').hidden = false; } }, 15000);
+  window.addEventListener('error', e => { if (!window.__NH_BOOTED && /three|import|module/i.test(String(e.message||''))) { document.getElementById('boot').hidden = true; document.getElementById('boot-error').hidden = false; } }, true);
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
